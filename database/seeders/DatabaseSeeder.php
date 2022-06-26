@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Create a test account
+        User::factory()->create([
+            'name' => 'Test Account',
+            'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Seed the database with default values
+        $this->call([
+            UserLevelSeeder::class,
+            ForgeLevelSeeder::class,
+            OreSeeder::class,
+            ItemSeeder::class,
+            GemSeeder::class,
+        ]);
     }
 }
